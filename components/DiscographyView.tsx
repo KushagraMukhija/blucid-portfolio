@@ -35,8 +35,8 @@ export default function DiscographyView({ onBack }: DiscographyViewProps) {
 
     const fac = new FastAverageColor();
     
-    // Using our own bulletproof local API route to proxy the image and set CORS headers
-    const proxyUrl = `/api/thumbnail?videoId=${activeVideoId}`;
+    // Use a public CORS proxy directly to avoid Vercel serverless function limitations with binary data
+    const proxyUrl = `https://corsproxy.io/?` + encodeURIComponent(`https://img.youtube.com/vi/${activeVideoId}/hqdefault.jpg`);
     
     const img = new Image();
     img.crossOrigin = "anonymous";

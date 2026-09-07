@@ -126,8 +126,8 @@ export default function LinkTreeView({ onBack }: LinkTreeViewProps) {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover contrast-[1.1] brightness-[1.2] saturate-[1.1]"
-          style={{ filter: "blur(2px)", objectPosition: "center 20%" }}
+          className="absolute inset-0 w-full h-full object-cover contrast-100 brightness-[0.8] saturate-[1.3]"
+          style={{ filter: "blur(12px)", objectPosition: "center 20%", opacity: 0.8 }}
         />
         {/* Soft pastel pink filter matching 2nd image */}
         <div className="absolute inset-0 bg-[#E2B4CD]/30 mix-blend-color pointer-events-none" />
