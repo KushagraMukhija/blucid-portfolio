@@ -95,6 +95,7 @@ export default function FilmReel() {
           <video
             ref={(el) => { videoRefs.current[i] = el; }}
             src={chap.src}
+            poster={chap.src.replace('.mp4', '-poster.jpg')}
             autoPlay
             loop
             muted={isMuted}

@@ -78,6 +78,7 @@ export default function ContactView({ onBack }: ContactViewProps) {
           alt="Contact Atmosphere"
           fill
           priority
+          unoptimized={true}
           className="object-cover grayscale contrast-125 brightness-75"
           style={{ filter: "blur(4px) grayscale(1) contrast(1.3) brightness(0.7)", objectPosition: "center center" }}
         />

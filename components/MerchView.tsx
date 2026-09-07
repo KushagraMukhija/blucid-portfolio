@@ -86,6 +86,7 @@ export default function MerchView({ onBack }: MerchViewProps) {
       >
         <video 
           src="/aarzoo.mp4" 
+          poster="/aarzoo-poster.jpg"
           autoPlay 
           loop 
           muted 

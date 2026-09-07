@@ -122,6 +122,7 @@ export default function LinkTreeView({ onBack }: LinkTreeViewProps) {
       >
         <video 
           src="/inte.mp4" 
+          poster="/inte-poster.jpg"
           autoPlay
           loop
           muted
