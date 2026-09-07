@@ -177,15 +177,16 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
         {/* LAYER 2: Filthy (B&W Base) */}
         <div ref={bgFilthyRef} className="absolute inset-0 z-0 bg-black overflow-hidden pointer-events-none">
           <video 
-            key={isMobile ? "hero-mobile" : "hero-desktop"}
-            src={isMobile ? "/hero-mobile.mp4" : "/hero.mp4"}
             autoPlay 
             loop 
             muted 
             playsInline 
             onCanPlay={() => setIsVideoReady(true)}
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
-          />
+          >
+            <source src="/hero-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
+            <source src="/hero.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,#000000_100%)] z-10" />
         </div>
 
@@ -200,14 +201,15 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
         {/* LAYER 4: The Blend-Mode Portal */}
         <div ref={portalLayerRef} className="absolute inset-0 z-20 mix-blend-screen bg-black overflow-hidden pointer-events-none opacity-0">
           <video 
-            key={isMobile ? "gulabi-mobile-1" : "gulabi-desktop-1"}
-            src={isMobile ? "/gulabi-mobile.mp4" : "/gulabi.mp4"}
             autoPlay 
             loop 
             muted 
             playsInline 
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
-          />
+          >
+            <source src="/gulabi-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
+            <source src="/gulabi.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,#FF007F_150%)] opacity-40 mix-blend-screen z-10" />
           <div ref={portalMaskRef} className="absolute inset-0 z-20 bg-black text-white mix-blend-multiply flex flex-col items-center justify-center" style={{ transformStyle: "flat" }}>
             <span className="text-xl md:text-2xl tracking-[0.4em] uppercase mb-2 whitespace-nowrap">Enter the world</span>
@@ -218,14 +220,15 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
         {/* LAYER 5: Solid Full Screen Override */}
         <div ref={bgGulabiFullRef} className="absolute inset-0 z-30 bg-black opacity-0 pointer-events-none overflow-hidden">
           <video 
-            key={isMobile ? "gulabi-mobile-2" : "gulabi-desktop-2"}
-            src={isMobile ? "/gulabi-mobile.mp4" : "/gulabi.mp4"}
             autoPlay 
             loop 
             muted 
             playsInline 
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
-          />
+          >
+            <source src="/gulabi-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
+            <source src="/gulabi.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,#FF007F_150%)] opacity-30 z-10" />
         </div>
 

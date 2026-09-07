@@ -130,8 +130,6 @@ export default function LinkTreeView({ onBack }: LinkTreeViewProps) {
         className="fixed inset-[-5%] w-[110%] h-[110%] z-[-2] pointer-events-none opacity-0 will-change-transform"
       >
         <video 
-          key={isMobile ? "inte-mobile" : "inte-desktop"}
-          src={isMobile ? "/inte-mobile.mp4" : "/inte.mp4"} 
           poster="/inte-poster.jpg"
           autoPlay
           loop
@@ -139,7 +137,10 @@ export default function LinkTreeView({ onBack }: LinkTreeViewProps) {
           playsInline
           className="absolute inset-0 w-full h-full object-cover contrast-100 brightness-[0.8] saturate-[1.3]"
           style={{ filter: "blur(12px)", objectPosition: "center 20%", opacity: 0.8 }}
-        />
+        >
+          <source src="/inte-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
+          <source src="/inte.mp4" type="video/mp4" />
+        </video>
         {/* Soft pastel pink filter matching 2nd image */}
         <div className="absolute inset-0 bg-[#E2B4CD]/30 mix-blend-color pointer-events-none" />
         <div className="absolute inset-0 bg-[#E2B4CD]/20 mix-blend-overlay pointer-events-none" />

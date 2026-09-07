@@ -94,16 +94,17 @@ export default function MerchView({ onBack }: MerchViewProps) {
         className="fixed inset-[-5%] w-[110%] h-[110%] z-[-2] pointer-events-none opacity-0 will-change-transform"
       >
         <video 
-          key={isMobile ? "aarzoo-mobile" : "aarzoo-desktop"}
-          src={isMobile ? "/aarzoo-mobile.mp4" : "/aarzoo.mp4"} 
           poster="/aarzoo-poster.jpg"
           autoPlay 
           loop 
           muted 
-          playsInline
-          className="object-cover w-full h-full grayscale-[0.3] contrast-[1.1] brightness-[0.6]"
+          playsInline 
+          className="absolute inset-0 w-full h-full object-cover opacity-40 brightness-50 contrast-125 saturate-50 mix-blend-screen"
           style={{ filter: "blur(6px)" }}
-        />
+        >
+          <source src="/aarzoo-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
+          <source src="/aarzoo.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-black/60 pointer-events-none" />
       </div>
 

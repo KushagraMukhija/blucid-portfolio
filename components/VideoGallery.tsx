@@ -103,16 +103,16 @@ export default function FilmReel() {
         >
           <video
             ref={(el) => { videoRefs.current[i] = el; }}
-            key={isMobile ? `${chap.src}-mobile` : `${chap.src}-desktop`}
-            src={isMobile ? chap.src.replace('.mp4', '-mobile.mp4') : chap.src}
             poster={chap.src.replace('.mp4', '-poster.jpg')}
             autoPlay
             loop
             muted={isMuted}
             playsInline
             className="w-full h-full object-cover"
-          />
-
+          >
+            <source src={chap.src.replace('.mp4', '-mobile.mp4')} media="(max-width: 768px)" type="video/mp4" />
+            <source src={chap.src} type="video/mp4" />
+          </video>
           {/* Atmospheric Color Washes */}
           <div className="absolute inset-0 bg-black/40" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/60" />
