@@ -184,7 +184,7 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
             onCanPlay={() => setIsVideoReady(true)}
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
           >
-            <source src="/hero-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
+            <source src="/filthy-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
             <source src="/hero.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,#000000_100%)] z-10" />

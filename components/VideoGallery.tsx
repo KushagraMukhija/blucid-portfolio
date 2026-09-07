@@ -12,6 +12,7 @@ const chapters = [
     title: "FILTHY",
     type: "OFFICIAL MUSIC VIDEO",
     src: "/hero.mp4",
+    mobileSrc: "/filthy-mobile.mp4",
     accent: "#ffffff",
   },
   {
@@ -19,6 +20,7 @@ const chapters = [
     title: "INTEZAAR",
     type: "OFFICIAL VISUALIZER",
     src: "/intezaar.mp4",
+    mobileSrc: "/intezaar-mobile.mp4",
     accent: "#9d4edd",
   },
   {
@@ -26,6 +28,7 @@ const chapters = [
     title: "GULABI AASMAN",
     type: "OFFICIAL MUSIC VIDEO",
     src: "/gulabi.mp4",
+    mobileSrc: "/gulabi-mobile.mp4",
     accent: "#ff007f",
   },
 ];
@@ -110,7 +113,7 @@ export default function FilmReel() {
             playsInline
             className="w-full h-full object-cover"
           >
-            <source src={chap.src.replace('.mp4', '-mobile.mp4')} media="(max-width: 768px)" type="video/mp4" />
+            <source src={chap.mobileSrc} media="(max-width: 768px)" type="video/mp4" />
             <source src={chap.src} type="video/mp4" />
           </video>
           {/* Atmospheric Color Washes */}
