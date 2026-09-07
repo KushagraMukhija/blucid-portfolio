@@ -207,7 +207,7 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
             playsInline 
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
           >
-            <source src="/gulabi-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
+            <source src="/gulbi-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
             <source src="/gulabi.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,#FF007F_150%)] opacity-40 mix-blend-screen z-10" />
@@ -226,7 +226,7 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
             playsInline 
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
           >
-            <source src="/gulabi-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
+            <source src="/gulbi-mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
             <source src="/gulabi.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,#FF007F_150%)] opacity-30 z-10" />

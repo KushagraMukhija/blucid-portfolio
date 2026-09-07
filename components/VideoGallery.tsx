@@ -28,7 +28,7 @@ const chapters = [
     title: "GULABI AASMAN",
     type: "OFFICIAL MUSIC VIDEO",
     src: "/gulabi.mp4",
-    mobileSrc: "/gulabi-mobile.mp4",
+    mobileSrc: "/gulbi-mobile.mp4",
     accent: "#ff007f",
   },
 ];
