@@ -13,6 +13,7 @@ for v in videos:
         ffmpeg_exe, "-i", v,
         "-vf", "scale=-2:720", 
         "-c:v", "libx264", "-crf", "24", "-preset", "faster", "-pix_fmt", "yuv420p",
+        "-movflags", "+faststart",
         "-c:a", "copy", "-y", f"{v}.tmp.mp4"
     ])
     os.replace(f"{v}.tmp.mp4", v)
