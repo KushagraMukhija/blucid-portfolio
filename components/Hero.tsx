@@ -65,9 +65,9 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
           gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
         });
 
-        splashTl.to(paths, { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut", stagger: 0.15 })
-          .to(signatureContainerRef.current, { opacity: 0, duration: 0.6, delay: 0.5 })
-          .to(splashRef.current, { opacity: 0, duration: 0.8, ease: "power2.inOut" }, "-=0.4")
+        splashTl.to(paths, { strokeDashoffset: 0, duration: 2.0, ease: "power2.inOut", stagger: 0.25 })
+          .to(signatureContainerRef.current, { opacity: 0, duration: 0.8, delay: 1.5 })
+          .to(splashRef.current, { opacity: 0, duration: 1.0, ease: "power2.inOut" }, "-=0.4")
           .set(splashRef.current, { display: "none" });
       } else if (splashRef.current) {
         gsap.set(splashRef.current, { display: "none" });
@@ -159,7 +159,7 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
 
         {/* LAYER 2: Filthy (B&W Base) */}
         <div ref={bgFilthyRef} className="absolute inset-0 z-0 bg-black overflow-hidden pointer-events-none">
-          <video src="/hero.mp4" poster="/hero-poster.jpg" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-70" />
+          <video src="/hero.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-70" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,#000000_100%)] z-10" />
         </div>
 
@@ -173,7 +173,7 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
 
         {/* LAYER 4: The Blend-Mode Portal */}
         <div ref={portalLayerRef} className="absolute inset-0 z-20 mix-blend-screen bg-black overflow-hidden pointer-events-none opacity-0">
-          <video src="/gulabi.mp4" poster="/gulabi-poster.jpg" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+          <video src="/gulabi.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,#FF007F_150%)] opacity-40 mix-blend-screen z-10" />
           <div ref={portalMaskRef} className="absolute inset-0 z-20 bg-black text-white mix-blend-multiply flex flex-col items-center justify-center" style={{ transformStyle: "flat" }}>
             <span className="text-xl md:text-2xl tracking-[0.4em] uppercase mb-2 whitespace-nowrap">Enter the world</span>
@@ -183,7 +183,7 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
 
         {/* LAYER 5: Solid Full Screen Override */}
         <div ref={bgGulabiFullRef} className="absolute inset-0 z-30 bg-black opacity-0 pointer-events-none overflow-hidden">
-          <video src="/gulabi.mp4" poster="/gulabi-poster.jpg" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-100" />
+          <video src="/gulabi.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-100" />
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,#FF007F_150%)] opacity-30 z-10" />
         </div>
 

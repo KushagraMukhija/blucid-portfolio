@@ -28,67 +28,18 @@ export default function DiscographyView({ onBack }: DiscographyViewProps) {
   const [renderedIds, setRenderedIds] = useState<string[]>(["PLeKIag4eOk4Y"]);
   const [themeColor, setThemeColor] = useState<string>("#d65c22");
 
-  // Automatically extract dominant color from the video thumbnail
+  // Hardcoded color map to completely bypass Vercel serverless / CORS proxy failures
   useEffect(() => {
-    // Avoid running on the initial playlist ID
     if (!activeVideoId || activeVideoId === "PLeKIag4eOk4Y") return;
-
-    const fac = new FastAverageColor();
     
-    // Use a public CORS proxy directly to avoid Vercel serverless function limitations with binary data
-    const proxyUrl = `https://corsproxy.io/?` + encodeURIComponent(`https://img.youtube.com/vi/${activeVideoId}/hqdefault.jpg`);
-    
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = proxyUrl;
-    
-    img.onload = () => {
-      try {
-        // Crop out the top and bottom 15% to avoid YouTube's black letterboxing bars
-        const cropY = Math.floor(img.height * 0.15);
-        const cropHeight = Math.floor(img.height * 0.70);
-        
-        const color = fac.getColor(img, { 
-          algorithm: 'dominant',
-          top: cropY,
-          height: cropHeight,
-          ignoredColor: [0, 0, 0, 255, 15] // Ignore pure black pixels
-        });
-        
-        const [r, g, b] = color.value;
-        const max = Math.max(r, g, b);
-        const min = Math.min(r, g, b);
-        const diff = max - min;
-        const avg = (r + g + b) / 3;
-        
-        // Check if it's actually black and white footage (Filthy)
-        // If the difference between RGB channels is very low across the board, AND it's not just a pure black/dark frame
-        if (diff < 15 && avg > 20 && avg < 235) {
-          setThemeColor("#D4AF37"); // Golden Yellow for B&W footage
-        } else {
-          // It's a colored video, but we need to ensure it's bright enough to read/glow
-          if (max < 200 && max > 0) {
-            const factor = 200 / max;
-            const newR = Math.min(255, Math.floor(r * factor));
-            const newG = Math.min(255, Math.floor(g * factor));
-            const newB = Math.min(255, Math.floor(b * factor));
-            const toHex = (c: number) => c.toString(16).padStart(2, '0');
-            setThemeColor(`#${toHex(newR)}${toHex(newG)}${toHex(newB)}`);
-          } else {
-            setThemeColor(color.hex);
-          }
-        }
-      } catch (err) {
-        console.error("Color extraction failed:", err);
-        setThemeColor("#d65c22");
-      }
+    const colorMap: Record<string, string> = {
+      "T2VET_NP924": "#C49B66", // Aarzoo (Warm/Golden)
+      "-inrJVsJHuk": "#FF007F", // Gulabi Aasman (Pink)
+      "hmqcpsEooPA": "#E2B4CD", // Intezaar (Pastel Pink)
+      "LKuzs6O6VDU": "#D4AF37", // Filthy (Gold/Yellow for B&W)
     };
-    img.onerror = (e) => {
-      console.error("Image load failed for color extraction", e);
-      setThemeColor("#d65c22");
-    };
-
-    return () => { fac.destroy(); };
+    
+    setThemeColor(colorMap[activeVideoId] || "#d65c22");
   }, [activeVideoId]);
 
   // Pre-load video IDs into the background stack as they are played so they are always instant
