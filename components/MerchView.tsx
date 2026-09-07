@@ -1,7 +1,7 @@
 // blucid-world/components/MerchView.tsx
 "use client";
 
-import { useLayoutEffect, useRef, useEffect } from "react";
+import { useLayoutEffect, useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 
@@ -10,6 +10,15 @@ interface MerchViewProps {
 }
 
 export default function MerchView({ onBack }: MerchViewProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 768);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const viewRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLElement>(null);
@@ -85,7 +94,8 @@ export default function MerchView({ onBack }: MerchViewProps) {
         className="fixed inset-[-5%] w-[110%] h-[110%] z-[-2] pointer-events-none opacity-0 will-change-transform"
       >
         <video 
-          src="/aarzoo.mp4" 
+          key={isMobile ? "aarzoo-mobile" : "aarzoo-desktop"}
+          src={isMobile ? "/aarzoo-mobile.mp4" : "/aarzoo.mp4"} 
           poster="/aarzoo-poster.jpg"
           autoPlay 
           loop 

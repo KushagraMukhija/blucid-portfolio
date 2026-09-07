@@ -31,6 +31,15 @@ const chapters = [
 ];
 
 export default function FilmReel() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 768);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -94,7 +103,8 @@ export default function FilmReel() {
         >
           <video
             ref={(el) => { videoRefs.current[i] = el; }}
-            src={chap.src}
+            key={isMobile ? `${chap.src}-mobile` : `${chap.src}-desktop`}
+            src={isMobile ? chap.src.replace('.mp4', '-mobile.mp4') : chap.src}
             poster={chap.src.replace('.mp4', '-poster.jpg')}
             autoPlay
             loop

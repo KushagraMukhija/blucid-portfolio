@@ -41,6 +41,15 @@ const STREAMING_LINKS = [
 ];
 
 export default function LinkTreeView({ onBack }: LinkTreeViewProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 768);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const viewRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLElement>(null);
@@ -121,7 +130,8 @@ export default function LinkTreeView({ onBack }: LinkTreeViewProps) {
         className="fixed inset-[-5%] w-[110%] h-[110%] z-[-2] pointer-events-none opacity-0 will-change-transform"
       >
         <video 
-          src="/inte.mp4" 
+          key={isMobile ? "inte-mobile" : "inte-desktop"}
+          src={isMobile ? "/inte-mobile.mp4" : "/inte.mp4"} 
           poster="/inte-poster.jpg"
           autoPlay
           loop

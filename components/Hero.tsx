@@ -30,6 +30,15 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
   const menuRef = useRef<HTMLDivElement>(null);
   const ambientWavesRef = useRef<HTMLDivElement>(null);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 768);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     if (!containerRef.current || !textSolidRef.current || !outerWrapperRef.current) return;
 
@@ -160,7 +169,8 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
         {/* LAYER 2: Filthy (B&W Base) */}
         <div ref={bgFilthyRef} className="absolute inset-0 z-0 bg-black overflow-hidden pointer-events-none">
           <video 
-            src="/hero.mp4" 
+            key={isMobile ? "hero-mobile" : "hero-desktop"}
+            src={isMobile ? "/hero-mobile.mp4" : "/hero.mp4"}
             autoPlay 
             loop 
             muted 
@@ -181,7 +191,8 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
         {/* LAYER 4: The Blend-Mode Portal */}
         <div ref={portalLayerRef} className="absolute inset-0 z-20 mix-blend-screen bg-black overflow-hidden pointer-events-none opacity-0">
           <video 
-            src="/gulabi.mp4" 
+            key={isMobile ? "gulabi-mobile-1" : "gulabi-desktop-1"}
+            src={isMobile ? "/gulabi-mobile.mp4" : "/gulabi.mp4"}
             autoPlay 
             loop 
             muted 
@@ -198,7 +209,8 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
         {/* LAYER 5: Solid Full Screen Override */}
         <div ref={bgGulabiFullRef} className="absolute inset-0 z-30 bg-black opacity-0 pointer-events-none overflow-hidden">
           <video 
-            src="/gulabi.mp4" 
+            key={isMobile ? "gulabi-mobile-2" : "gulabi-desktop-2"}
+            src={isMobile ? "/gulabi-mobile.mp4" : "/gulabi.mp4"}
             autoPlay 
             loop 
             muted 
