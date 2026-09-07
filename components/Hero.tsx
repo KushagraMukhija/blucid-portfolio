@@ -165,9 +165,7 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
             loop 
             muted 
             playsInline 
-            className="absolute inset-0 w-full h-full object-cover opacity-70"
-            style={{ opacity: 0, transition: "opacity 1.5s ease-in-out" }}
-            onPlaying={(e) => e.currentTarget.style.opacity = ""}
+            className="absolute inset-0 w-full h-full object-cover opacity-0 animate-[fade-in_2s_ease-in-out_1.5s_forwards]"
           />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,#000000_100%)] z-10" />
         </div>
@@ -188,9 +186,7 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
             loop 
             muted 
             playsInline 
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ opacity: 0, transition: "opacity 1.5s ease-in-out" }}
-            onPlaying={(e) => e.currentTarget.style.opacity = ""}
+            className="absolute inset-0 w-full h-full object-cover opacity-0 animate-[fade-in_2s_ease-in-out_1.5s_forwards]"
           />
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,#FF007F_150%)] opacity-40 mix-blend-screen z-10" />
           <div ref={portalMaskRef} className="absolute inset-0 z-20 bg-black text-white mix-blend-multiply flex flex-col items-center justify-center" style={{ transformStyle: "flat" }}>
@@ -207,9 +203,7 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
             loop 
             muted 
             playsInline 
-            className="absolute inset-0 w-full h-full object-cover opacity-100"
-            style={{ opacity: 0, transition: "opacity 1.5s ease-in-out" }}
-            onPlaying={(e) => e.currentTarget.style.opacity = ""}
+            className="absolute inset-0 w-full h-full object-cover opacity-0 animate-[fade-in_2s_ease-in-out_1.5s_forwards]"
           />
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,#FF007F_150%)] opacity-30 z-10" />
         </div>
