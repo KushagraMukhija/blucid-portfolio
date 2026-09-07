@@ -15,6 +15,7 @@ for v in videos:
         ffmpeg_exe, "-i", input_path,
         "-vf", "scale=-2:480", 
         "-c:v", "libx264", "-crf", "35", "-preset", "faster", "-pix_fmt", "yuv420p",
+        "-movflags", "+faststart",
         "-c:a", "copy", "-y", output_path
     ])
     print(f"Successfully compressed {output_path}")
