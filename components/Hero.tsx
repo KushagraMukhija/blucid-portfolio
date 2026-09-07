@@ -31,12 +31,20 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
   const ambientWavesRef = useRef<HTMLDivElement>(null);
 
   const [isMobile, setIsMobile] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
 
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768);
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+    // Bulletproof failsafe: guarantee visibility after 1.5 seconds
+    const timer = setTimeout(() => setIsVideoReady(true), 1500);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timer);
+    };
   }, []);
 
   useEffect(() => {
@@ -175,7 +183,8 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
             loop 
             muted 
             playsInline 
-            className="absolute inset-0 w-full h-full object-cover opacity-0 animate-[fade-in_2s_ease-in-out_1.5s_forwards]"
+            onCanPlay={() => setIsVideoReady(true)}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
           />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,#000000_100%)] z-10" />
         </div>
@@ -197,7 +206,7 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
             loop 
             muted 
             playsInline 
-            className="absolute inset-0 w-full h-full object-cover opacity-0 animate-[fade-in_2s_ease-in-out_1.5s_forwards]"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
           />
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,#FF007F_150%)] opacity-40 mix-blend-screen z-10" />
           <div ref={portalMaskRef} className="absolute inset-0 z-20 bg-black text-white mix-blend-multiply flex flex-col items-center justify-center" style={{ transformStyle: "flat" }}>
@@ -215,7 +224,7 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
             loop 
             muted 
             playsInline 
-            className="absolute inset-0 w-full h-full object-cover opacity-0 animate-[fade-in_2s_ease-in-out_1.5s_forwards]"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
           />
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,#FF007F_150%)] opacity-30 z-10" />
         </div>
