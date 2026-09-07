@@ -46,7 +46,15 @@ export default function GridGallery({ onVideoChange }: GridGalleryProps) {
     const fetchYouTubePlaylist = async () => {
       const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
       if (!API_KEY) {
-        setApiKeyMissing(true); setIsLoading(false); return;
+        // Fallback to static data if API key is missing (e.g. deployed without env variable)
+        setVideos([
+          { id: "T2VET_NP924", title: "Aarzoo" },
+          { id: "-inrJVsJHuk", title: "Gulabi Aasman" },
+          { id: "hmqcpsEooPA", title: "Intezaar" },
+          { id: "LKuzs6O6VDU", title: "Filthy" }
+        ]);
+        setIsLoading(false);
+        return;
       }
       try {
         const videosRes = await fetch(
