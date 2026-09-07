@@ -12,7 +12,7 @@ for v in videos:
     subprocess.run([
         ffmpeg_exe, "-i", v,
         "-vf", "scale=-2:720", 
-        "-c:v", "libx264", "-crf", "35", "-preset", "faster", "-pix_fmt", "yuv420p",
+        "-c:v", "libx264", "-crf", "24", "-preset", "faster", "-pix_fmt", "yuv420p",
         "-c:a", "copy", "-y", f"{v}.tmp.mp4"
     ])
     os.replace(f"{v}.tmp.mp4", v)
