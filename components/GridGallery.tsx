@@ -290,6 +290,34 @@ function JackpotArchiveOverlay({ videos, onSelect, onClose }: { videos: VideoIte
     };
     window.addEventListener("mousemove", handleMouseMove);
 
+    // --- Mobile Touch Swipe Logic ---
+    let lastTouchY = 0;
+    let touchVelocity = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      lastTouchY = e.touches[0].clientY;
+      touchVelocity = 0;
+      speedRef.current = 0;
+      entranceVelocity.current = 0;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const currentY = e.touches[0].clientY;
+      const deltaY = currentY - lastTouchY;
+      lastTouchY = currentY;
+      touchVelocity = deltaY;
+      targetYRef.current += deltaY * 1.5; 
+    };
+
+    const handleTouchEnd = () => {
+      // Transfer finger swipe momentum into the decaying entrance velocity for smooth coasting
+      entranceVelocity.current = -touchVelocity * 2.0;
+    };
+
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd);
+
     let raf: number;
     const tick = () => {
       entranceVelocity.current *= 0.94;
@@ -321,6 +349,9 @@ function JackpotArchiveOverlay({ videos, onSelect, onClose }: { videos: VideoIte
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
       cancelAnimationFrame(raf);
     };
   }, [totalOriginalHeight]);
