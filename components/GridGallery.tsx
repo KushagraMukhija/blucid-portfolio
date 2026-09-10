@@ -377,7 +377,7 @@ function JackpotArchiveOverlay({ videos, onSelect, onClose }: { videos: VideoIte
       `}</style>
 
       <div className="absolute top-0 w-full px-8 py-8 flex justify-between items-center z-50">
-        <span className="text-xs font-mono tracking-[0.4em] text-[#FF007F] uppercase">Terminal Archive Mode</span>
+        <span className="text-xs font-mono tracking-[0.4em] text-[#FF007F] uppercase">Select a song</span>
         <button onClick={triggerClose} className="text-xs font-mono tracking-[0.3em] text-white/50 hover:text-white uppercase transition-colors">
           [ Close ]
         </button>

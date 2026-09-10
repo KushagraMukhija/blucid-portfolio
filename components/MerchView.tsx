@@ -121,7 +121,7 @@ export default function MerchView({ onBack }: MerchViewProps) {
           onClick={handleClose}
           className="group relative font-mono text-xs tracking-[0.4em] uppercase text-white/50 hover:text-[#C49B66] transition-colors duration-300 bg-transparent border-none cursor-pointer pb-2"
         >
-          ← Return to Portal
+          ← BLUCIDWORLD
           <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#C49B66] transition-all duration-500 ease-out group-hover:w-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_#C49B66]" />
         </button>
         <span className="text-[10px] font-mono text-white/30 border border-white/10 px-2.5 py-1 rounded">

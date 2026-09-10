@@ -160,7 +160,7 @@ export default function LinkTreeView({ onBack }: LinkTreeViewProps) {
           onClick={handleClose}
           className="group relative font-mono text-xs tracking-[0.4em] uppercase text-white/50 hover:text-[#E2B4CD] transition-colors duration-300 bg-transparent border-none cursor-pointer pb-2"
         >
-          ← Return to Portal
+          ← BLUCIDWORLD
           <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#E2B4CD] transition-all duration-500 ease-out group-hover:w-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_rgba(226,180,205,0.8)]" />
         </button>
 
@@ -246,10 +246,7 @@ export default function LinkTreeView({ onBack }: LinkTreeViewProps) {
         </div>
 
         {/* FOOTER */}
-        <div className="pt-8 border-t border-[#E2B4CD]/20 flex justify-between items-center mt-4">
-          <span className="font-mono text-[10px] text-[#E2B4CD] tracking-[0.2em] uppercase drop-shadow-[0_0_8px_rgba(226,180,205,0.4)]">
-            STATUS: OPERATIONAL
-          </span>
+        <div className="pt-8 border-t border-[#E2B4CD]/20 flex justify-end items-center mt-4">
           <span className="font-mono text-[10px] text-[#E2B4CD] uppercase drop-shadow-[0_0_8px_rgba(226,180,205,0.4)]">
             BLUCID © 2026
           </span>

@@ -98,7 +98,7 @@ export default function ContactView({ onBack }: ContactViewProps) {
           onClick={handleClose}
           className="group relative font-mono text-xs tracking-[0.4em] uppercase text-white/50 hover:text-[#FF007F] transition-colors duration-300 bg-transparent border-none cursor-pointer pb-2"
         >
-          ← Return to Portal
+          ← BLUCIDWORLD
           <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#FF007F] transition-all duration-500 ease-out group-hover:w-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_#FF007F]" />
         </button>
 
@@ -185,7 +185,7 @@ export default function ContactView({ onBack }: ContactViewProps) {
                 <div>
                   <h3 className="text-2xl md:text-3xl font-black uppercase tracking-widest text-white mb-4">Connect</h3>
                   <p className="text-xs font-mono tracking-widest text-white/40 uppercase leading-relaxed max-w-sm mx-auto">
-                    Open channels for creative alignment and direct transmissions.
+                    For collaborations, show bookings, and other inquiries.
                   </p>
                 </div>
 

@@ -51,7 +51,7 @@ export default function DiscographyPage() {
           href="/" 
           className="font-mono text-xs tracking-[0.4em] uppercase text-white/50 hover:text-[#FF007F] transition-colors duration-300"
         >
-          ← Return to Portal
+          ← BLUCIDWORLD
         </Link>
         <span className="text-xs font-mono text-[#FF007F] tracking-[0.3em] uppercase">
           BLUCID UNIVERSE // WORLD 001

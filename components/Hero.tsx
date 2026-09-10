@@ -272,7 +272,6 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
             }
           `}</style>
           <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-40 mix-blend-screen">
-            <div className="absolute w-[1px] h-full bg-white/30 left-[25%] animate-[film-scratch_2.2s_infinite_steps(1)]" />
             <div className="absolute w-[2px] h-[40%] bg-white/10 left-[75%] top-[10%] animate-[film-scratch_3s_infinite_steps(1)]" />
             <div className="absolute w-[1px] h-[60%] bg-[#FF007F]/20 left-[45%] top-[30%] animate-[film-scratch_1.7s_infinite_steps(1)]" />
           </div>

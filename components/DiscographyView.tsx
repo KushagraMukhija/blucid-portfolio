@@ -146,7 +146,7 @@ export default function DiscographyView({ onBack }: DiscographyViewProps) {
           style={{ '--theme-color': themeColor } as React.CSSProperties}
           className="group relative font-mono text-xs tracking-[0.4em] uppercase text-white/40 hover:text-[var(--theme-color)] transition-colors duration-300 bg-transparent border-none cursor-pointer pb-2"
         >
-          ← Return to Portal
+          ← BLUCIDWORLD
           <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-[var(--theme-color)] transition-all duration-500 ease-out group-hover:w-full opacity-0 group-hover:opacity-100" style={{ boxShadow: `0 0 8px var(--theme-color)` }} />
         </button>
         <span className="text-xs font-mono text-white/30 tracking-[0.3em] uppercase flex items-center gap-3 transition-colors duration-1000">

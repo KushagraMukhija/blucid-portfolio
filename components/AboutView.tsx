@@ -99,7 +99,7 @@ export default function AboutView({ onBack }: AboutViewProps) {
           onClick={handleClose}
           className="group relative font-mono text-xs tracking-[0.4em] uppercase text-white/50 hover:text-[#D4AF37] transition-colors duration-300 bg-transparent border-none cursor-pointer pb-2"
         >
-          ← Return to Portal
+          ← BLUCIDWORLD
           <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#D4AF37] transition-all duration-500 ease-out group-hover:w-full opacity-0 group-hover:opacity-100 shadow-[0_0_8px_rgba(212,175,55,0.8)]" />
         </button>
         <span className="text-xs font-mono text-[#D4AF37] tracking-[0.3em] uppercase flex items-center gap-3 drop-shadow-[0_0_8px_rgba(212,175,55,0.2)]">
@@ -182,8 +182,7 @@ export default function AboutView({ onBack }: AboutViewProps) {
               </a>
             ))}
 
-            <div className="border-t border-[#D4AF37]/20 pt-4 mt-2 flex justify-between items-center font-mono text-[10px] text-[#D4AF37] uppercase tracking-widest drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">
-              <span>Status: Operational</span>
+            <div className="border-t border-[#D4AF37]/20 pt-4 mt-2 flex justify-end items-center font-mono text-[10px] text-[#D4AF37] uppercase tracking-widest drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">
               <span>BLUCID © 2026</span>
             </div>
           </div>
