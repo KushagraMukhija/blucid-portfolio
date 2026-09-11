@@ -21,6 +21,7 @@ export const useGlobalAudio = () => {
 
 export const GlobalAudioProvider = ({ children }: { children: React.ReactNode }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const isBlockedRef = useRef(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
@@ -37,6 +38,13 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
   }, [startAudio]);
 
   const toggleMute = useCallback(() => {
+    if (isBlockedRef.current) {
+      // If audio is currently blocked by browser policy, the click on the button 
+      // will bubble up to the window listener and play it.
+      // We must NOT toggle isMuted to true here, otherwise the window listener 
+      // will instantly pause the audio it just started!
+      return;
+    }
     setIsMuted(prev => !prev);
   }, []);
 
@@ -56,13 +64,19 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
         }
       });
     } else {
+      audioRef.current.muted = false;
       audioRef.current.play().then(() => {
+        isBlockedRef.current = false;
         gsap.to(audioRef.current, { volume: MAX_VOLUME, duration: 2, ease: "power2.inOut" });
       }).catch((e) => {
         console.log("Audio autoplay prevented by browser. Waiting for interaction.", e);
+        isBlockedRef.current = true;
+        
         // Fallback interaction listener
         const onInteract = () => {
+          isBlockedRef.current = false;
           if (!audioRef.current || isMuted || isVideoPlaying) return;
+          audioRef.current.muted = false;
           audioRef.current.play().then(() => {
             gsap.to(audioRef.current, { volume: MAX_VOLUME, duration: 2, ease: "power2.inOut" });
           });
@@ -79,7 +93,7 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
     <GlobalAudioContext.Provider value={{ isMuted, toggleMute, pauseForVideo, resumeFromVideo, startAudio }}>
       {children}
       
-      {/* Set volume to 0 immediately upon DOM attachment to completely avoid initial distortion / pop */}
+      {/* Set volume to 0 and explicitly use HTML muted property to guarantee ZERO audio output until play() resolves successfully */}
       <audio 
         ref={(el) => { 
           if (el) {
@@ -90,6 +104,7 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
         src="/NIGHTZONED.mp3" 
         preload="auto" 
         loop 
+        muted={true}
       />
 
       {/* Global Sound Toggle Button */}
