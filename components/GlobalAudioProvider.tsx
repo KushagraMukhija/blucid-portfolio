@@ -32,6 +32,11 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
     if (!hasStarted) setHasStarted(true);
   }, [hasStarted]);
 
+  // Start audio immediately when the website loads (component mounts)
+  useEffect(() => {
+    startAudio();
+  }, [startAudio]);
+
   const toggleMute = useCallback(() => {
     if (isBlockedRef.current) {
       // If audio is currently blocked by browser policy, the click on the button 
