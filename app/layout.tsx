@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: "The cinematic universe of BLUCID.",
 };
 
+import { GlobalAudioProvider } from "@/components/GlobalAudioProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,8 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${housttely.variable}`}>
-        <CustomCursor />
-        <SmoothScroll>{children}</SmoothScroll>
+        <GlobalAudioProvider>
+          <CustomCursor />
+          <SmoothScroll>{children}</SmoothScroll>
+        </GlobalAudioProvider>
       </body>
     </html>
   );

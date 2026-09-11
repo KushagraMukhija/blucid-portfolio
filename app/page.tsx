@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { flushSync } from "react-dom";
 import Hero from "@/components/Hero";
 import DiscographyView from "@/components/DiscographyView";
@@ -13,10 +13,19 @@ import MerchView from "@/components/MerchView";
 
 type ViewState = "hero" | "discography" | "about" | "contact" | "linktree" | "merch";
 
+import { useGlobalAudio } from "@/components/GlobalAudioProvider";
+
 export default function Home() {
+  const { startAudio } = useGlobalAudio();
   const [viewState, setViewState] = useState<ViewState>("hero");
   const [splashPlayed, setSplashPlayed] = useState(false);
   const [heroScroll, setHeroScroll] = useState(0);
+
+  useEffect(() => {
+    if (splashPlayed) {
+      startAudio();
+    }
+  }, [splashPlayed, startAudio]);
 
   const handleNavigate = (viewName: string) => {
     const normalized = viewName.toLowerCase().trim();

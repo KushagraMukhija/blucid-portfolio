@@ -15,7 +15,10 @@ interface GridGalleryProps {
   onVideoChange?: (videoId: string, videoTitle: string) => void;
 }
 
+import { useGlobalAudio } from "@/components/GlobalAudioProvider";
+
 export default function GridGallery({ onVideoChange }: GridGalleryProps) {
+  const { pauseForVideo, resumeFromVideo } = useGlobalAudio();
   const [videos, setVideos] = useState<VideoItem[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
@@ -23,6 +26,17 @@ export default function GridGallery({ onVideoChange }: GridGalleryProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [apiKeyMissing, setApiKeyMissing] = useState(false);
   const [showArchive, setShowArchive] = useState(false);
+
+  useEffect(() => {
+    if (isMuted) {
+      resumeFromVideo();
+    } else {
+      pauseForVideo();
+    }
+    return () => {
+      resumeFromVideo();
+    };
+  }, [isMuted, pauseForVideo, resumeFromVideo]);
   
   const playerRef = useRef<any>(null);
   const requestRef = useRef<number | null>(null);
