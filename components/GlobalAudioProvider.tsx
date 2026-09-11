@@ -24,7 +24,6 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
-  const [isBlocked, setIsBlocked] = useState(false);
 
   const MAX_VOLUME = 0.25;
 
@@ -43,10 +42,9 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
       gsap.to(audioRef.current, { volume: MAX_VOLUME, duration: 2, ease: "power2.inOut" });
     }).catch((e) => {
       console.log("Audio autoplay prevented by browser. Waiting for interaction.", e);
-      setIsBlocked(true);
+      // Browser blocked autoplay. Wait for the very first interaction anywhere on the site.
       const onInteract = () => {
         if (!audioRef.current || isMuted || isVideoPlaying) return;
-        setIsBlocked(false);
         audioRef.current.play().then(() => {
           gsap.to(audioRef.current, { volume: MAX_VOLUME, duration: 2, ease: "power2.inOut" });
         });
@@ -59,15 +57,14 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
   }, [hasStarted, isMuted, isVideoPlaying]);
 
   const toggleMute = useCallback(() => {
-    if (isBlocked) return; // Let the window interaction handler catch it instead
     setIsMuted(prev => !prev);
-  }, [isBlocked]);
+  }, []);
 
   const pauseForVideo = useCallback(() => setIsVideoPlaying(true), []);
   const resumeFromVideo = useCallback(() => setIsVideoPlaying(false), []);
 
   useEffect(() => {
-    if (!audioRef.current || !hasStarted || isBlocked) return;
+    if (!audioRef.current || !hasStarted) return;
 
     if (isMuted || isVideoPlaying) {
       gsap.to(audioRef.current, { 
@@ -83,7 +80,7 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
         gsap.to(audioRef.current, { volume: MAX_VOLUME, duration: 2, ease: "power2.inOut" });
       }).catch(e => console.log("Audio play prevented", e));
     }
-  }, [isMuted, isVideoPlaying, hasStarted, isBlocked]);
+  }, [isMuted, isVideoPlaying, hasStarted]);
 
   return (
     <GlobalAudioContext.Provider value={{ isMuted, toggleMute, pauseForVideo, resumeFromVideo, startAudio }}>
@@ -106,9 +103,9 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
       {hasStarted && (
         <button
           onClick={toggleMute}
-          className={`fixed bottom-6 right-6 z-[9999] px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-md text-white/50 hover:text-[#D4AF37] hover:border-[#D4AF37]/50 hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-500 font-mono text-[10px] tracking-[0.2em] uppercase ${isBlocked ? "animate-pulse border-[#D4AF37]/50 text-[#D4AF37]" : ""}`}
+          className="fixed bottom-6 right-6 z-[9999] px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-md text-white/50 hover:text-[#D4AF37] hover:border-[#D4AF37]/50 hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-500 font-mono text-[10px] tracking-[0.2em] uppercase"
         >
-          {isBlocked ? "Enable Audio" : (isMuted ? "Sound Off" : "Sound On")}
+          {isMuted ? "Sound Off" : "Sound On"}
         </button>
       )}
     </GlobalAudioContext.Provider>
