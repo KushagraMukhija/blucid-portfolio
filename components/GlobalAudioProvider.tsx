@@ -28,33 +28,13 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
   const MAX_VOLUME = 0.25;
 
   const startAudio = useCallback(() => {
-    if (hasStarted) return;
-    if (!audioRef.current) return;
-    
-    setHasStarted(true);
-    
-    // Removing currentTime = 0 to prevent glitching/skipping
-    audioRef.current.volume = 0;
+    if (!hasStarted) setHasStarted(true);
+  }, [hasStarted]);
 
-    if (isMuted || isVideoPlaying) return;
-
-    audioRef.current.play().then(() => {
-      gsap.to(audioRef.current, { volume: MAX_VOLUME, duration: 2, ease: "power2.inOut" });
-    }).catch((e) => {
-      console.log("Audio autoplay prevented by browser. Waiting for interaction.", e);
-      // Browser blocked autoplay. Wait for the very first interaction anywhere on the site.
-      const onInteract = () => {
-        if (!audioRef.current || isMuted || isVideoPlaying) return;
-        audioRef.current.play().then(() => {
-          gsap.to(audioRef.current, { volume: MAX_VOLUME, duration: 2, ease: "power2.inOut" });
-        });
-        window.removeEventListener("click", onInteract);
-        window.removeEventListener("touchstart", onInteract);
-      };
-      window.addEventListener("click", onInteract);
-      window.addEventListener("touchstart", onInteract);
-    });
-  }, [hasStarted, isMuted, isVideoPlaying]);
+  // Start audio immediately when the website loads (component mounts)
+  useEffect(() => {
+    startAudio();
+  }, [startAudio]);
 
   const toggleMute = useCallback(() => {
     setIsMuted(prev => !prev);
@@ -78,7 +58,20 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
     } else {
       audioRef.current.play().then(() => {
         gsap.to(audioRef.current, { volume: MAX_VOLUME, duration: 2, ease: "power2.inOut" });
-      }).catch(e => console.log("Audio play prevented", e));
+      }).catch((e) => {
+        console.log("Audio autoplay prevented by browser. Waiting for interaction.", e);
+        // Fallback interaction listener
+        const onInteract = () => {
+          if (!audioRef.current || isMuted || isVideoPlaying) return;
+          audioRef.current.play().then(() => {
+            gsap.to(audioRef.current, { volume: MAX_VOLUME, duration: 2, ease: "power2.inOut" });
+          });
+          window.removeEventListener("click", onInteract);
+          window.removeEventListener("touchstart", onInteract);
+        };
+        window.addEventListener("click", onInteract);
+        window.addEventListener("touchstart", onInteract);
+      });
     }
   }, [isMuted, isVideoPlaying, hasStarted]);
 
