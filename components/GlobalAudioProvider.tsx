@@ -108,7 +108,7 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
           onClick={toggleMute}
           className={`fixed bottom-6 right-6 z-[9999] px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-md text-white/50 hover:text-[#D4AF37] hover:border-[#D4AF37]/50 hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-500 font-mono text-[10px] tracking-[0.2em] uppercase ${isBlocked ? "animate-pulse border-[#D4AF37]/50 text-[#D4AF37]" : ""}`}
         >
-          {isBlocked ? "Enable Audio" : (isMuted ? "Sound On" : "Sound Off")}
+          {isBlocked ? "Enable Audio" : (isMuted ? "Sound Off" : "Sound On")}
         </button>
       )}
     </GlobalAudioContext.Provider>
