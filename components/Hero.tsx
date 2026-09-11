@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGlobalAudio } from "@/components/GlobalAudioProvider";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -32,6 +33,17 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
 
   const [isMobile, setIsMobile] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const [entered, setEntered] = useState(false);
+  const splashTlRef = useRef<gsap.core.Timeline | null>(null);
+  const { startAudio } = useGlobalAudio();
+
+  // If splash already played (returning to view), bypass enter screen
+  useEffect(() => {
+    if (splashPlayed) {
+      setEntered(true);
+      startAudio();
+    }
+  }, [splashPlayed, startAudio]);
 
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768);
@@ -70,10 +82,12 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
     const ctx = gsap.context(() => {
 
       const splashTl = gsap.timeline({
+        paused: true,
         onComplete: () => {
           if (!splashPlayed) setSplashPlayed(true);
         }
       });
+      splashTlRef.current = splashTl;
 
       if (!splashPlayed && signatureContainerRef.current && splashRef.current) {
         const paths = signatureContainerRef.current.querySelectorAll("path");
@@ -154,6 +168,23 @@ export default function Hero({ onNavigate, splashPlayed, setSplashPlayed, initia
 
   return (
     <div ref={outerWrapperRef} className="relative w-full bg-black overflow-x-hidden">
+
+      {/* LAYER 0.5: Enter Screen */}
+      {!splashPlayed && !entered && (
+        <div 
+          onClick={() => {
+            setEntered(true);
+            startAudio();
+            if (splashTlRef.current) splashTlRef.current.play();
+          }}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black cursor-pointer group"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_100%)] pointer-events-none" />
+          <span className="font-mono text-xs md:text-sm tracking-[0.4em] text-white/50 group-hover:text-white transition-colors duration-500 uppercase animate-pulse">
+            Click to enter BLUCIDWORLD
+          </span>
+        </div>
+      )}
 
       {/* LAYER 1: Signature Splash Screen */}
       <div ref={splashRef} className="fixed inset-0 z-50 flex items-center justify-center bg-black pointer-events-none">
