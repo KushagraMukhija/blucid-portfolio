@@ -25,18 +25,7 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
 
-  useEffect(() => {
-    // Initialize the audio element
-    const audio = new Audio("/NIGHTZONED.mp3");
-    audio.loop = true;
-    audio.volume = 0; // start at 0 for fade in
-    audioRef.current = audio;
-
-    return () => {
-      audio.pause();
-      audioRef.current = null;
-    };
-  }, []);
+  const MAX_VOLUME = 0.25;
 
   const startAudio = useCallback(() => {
     if (hasStarted) return;
@@ -44,21 +33,19 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
     
     setHasStarted(true);
     
-    // Always start from beginning if website is reloaded (implicit in fresh mount)
-    // but we ensure it's at 0 anyway.
     audioRef.current.currentTime = 0;
+    audioRef.current.volume = 0;
 
     if (isMuted || isVideoPlaying) return;
 
     audioRef.current.play().then(() => {
-      gsap.to(audioRef.current, { volume: 1, duration: 2, ease: "power2.inOut" });
+      gsap.to(audioRef.current, { volume: MAX_VOLUME, duration: 2, ease: "power2.inOut" });
     }).catch((e) => {
       console.log("Audio autoplay prevented by browser. Waiting for interaction.", e);
-      // Fallback: wait for next click to start
       const onInteract = () => {
         if (!audioRef.current || isMuted || isVideoPlaying) return;
         audioRef.current.play().then(() => {
-          gsap.to(audioRef.current, { volume: 1, duration: 2, ease: "power2.inOut" });
+          gsap.to(audioRef.current, { volume: MAX_VOLUME, duration: 2, ease: "power2.inOut" });
         });
         window.removeEventListener("click", onInteract);
         window.removeEventListener("touchstart", onInteract);
@@ -79,7 +66,6 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
     if (!audioRef.current || !hasStarted) return;
 
     if (isMuted || isVideoPlaying) {
-      // Fade out and pause
       gsap.to(audioRef.current, { 
         volume: 0, 
         duration: 1.5, 
@@ -89,9 +75,8 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
         }
       });
     } else {
-      // Fade in and play
       audioRef.current.play().then(() => {
-        gsap.to(audioRef.current, { volume: 1, duration: 2, ease: "power2.inOut" });
+        gsap.to(audioRef.current, { volume: MAX_VOLUME, duration: 2, ease: "power2.inOut" });
       }).catch(e => console.log("Audio play prevented", e));
     }
   }, [isMuted, isVideoPlaying, hasStarted]);
@@ -99,6 +84,10 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
   return (
     <GlobalAudioContext.Provider value={{ isMuted, toggleMute, pauseForVideo, resumeFromVideo, startAudio }}>
       {children}
+      
+      {/* DOM audio element handles streaming significantly better than new Audio() */}
+      <audio ref={audioRef} src="/NIGHTZONED.mp3" preload="auto" loop />
+
       {/* Global Sound Toggle Button */}
       {hasStarted && (
         <button
