@@ -9,6 +9,7 @@ interface GlobalAudioContextType {
   pauseForVideo: () => void;
   resumeFromVideo: () => void;
   startAudio: () => void;
+  setThemeColor: (color: string) => void;
 }
 
 const GlobalAudioContext = createContext<GlobalAudioContextType | null>(null);
@@ -25,6 +26,8 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const [themeColor, setThemeColor] = useState<string>("#FF007F");
+  const [isHovered, setIsHovered] = useState(false);
 
   const MAX_VOLUME = 0.25;
 
@@ -90,7 +93,7 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
   }, [isMuted, isVideoPlaying, hasStarted]);
 
   return (
-    <GlobalAudioContext.Provider value={{ isMuted, toggleMute, pauseForVideo, resumeFromVideo, startAudio }}>
+    <GlobalAudioContext.Provider value={{ isMuted, toggleMute, pauseForVideo, resumeFromVideo, startAudio, setThemeColor }}>
       {children}
       
       {/* Set volume to 0 and explicitly use HTML muted property to guarantee ZERO audio output until play() resolves successfully */}
@@ -101,7 +104,7 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
             audioRef.current = el;
           }
         }} 
-        src="/NIGHTZONED.mp3" 
+        src="/NIGHTZONED.mp3?v=2" 
         preload="auto" 
         loop 
         muted={true}
@@ -111,7 +114,14 @@ export const GlobalAudioProvider = ({ children }: { children: React.ReactNode })
       {hasStarted && (
         <button
           onClick={toggleMute}
-          className="fixed bottom-6 right-6 z-[9999] px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-md text-white/50 hover:text-[#D4AF37] hover:border-[#D4AF37]/50 hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-500 font-mono text-[10px] tracking-[0.2em] uppercase"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className="fixed bottom-6 right-6 z-[9999] px-4 py-2 rounded-full border bg-black/60 backdrop-blur-md transition-all duration-500 font-mono text-[10px] tracking-[0.2em] uppercase"
+          style={{
+            color: isHovered ? themeColor : "rgba(255, 255, 255, 0.5)",
+            borderColor: isHovered ? `${themeColor}80` : "rgba(255, 255, 255, 0.1)",
+            boxShadow: isHovered ? `0 0 15px ${themeColor}66` : "none"
+          }}
         >
           {isMuted ? "Sound Off" : "Sound On"}
         </button>

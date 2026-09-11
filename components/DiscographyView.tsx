@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FastAverageColor } from 'fast-average-color';
 import GridGallery from "./GridGallery";
+import { useGlobalAudio } from "@/components/GlobalAudioProvider";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -27,6 +28,7 @@ export default function DiscographyView({ onBack }: DiscographyViewProps) {
   const [activeVideoTitle, setActiveVideoTitle] = useState<string>("Gulabi Aasman");
   const [renderedIds, setRenderedIds] = useState<string[]>(["PLeKIag4eOk4Y"]);
   const [themeColor, setThemeColor] = useState<string>("#d65c22");
+  const { setThemeColor: setGlobalThemeColor } = useGlobalAudio();
 
   // Hardcoded color map to completely bypass Vercel serverless / CORS proxy failures
   useEffect(() => {
@@ -39,8 +41,10 @@ export default function DiscographyView({ onBack }: DiscographyViewProps) {
       "LKuzs6O6VDU": "#D4AF37", // Filthy (Gold/Yellow for B&W)
     };
     
-    setThemeColor(colorMap[activeVideoId] || "#d65c22");
-  }, [activeVideoId]);
+    const newColor = colorMap[activeVideoId] || "#d65c22";
+    setThemeColor(newColor);
+    setGlobalThemeColor(newColor);
+  }, [activeVideoId, setGlobalThemeColor]);
 
   // Pre-load video IDs into the background stack as they are played so they are always instant
   useEffect(() => {

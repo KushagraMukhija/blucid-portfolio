@@ -16,10 +16,23 @@ type ViewState = "hero" | "discography" | "about" | "contact" | "linktree" | "me
 import { useGlobalAudio } from "@/components/GlobalAudioProvider";
 
 export default function Home() {
-  const { startAudio } = useGlobalAudio();
+  const { startAudio, setThemeColor } = useGlobalAudio();
   const [viewState, setViewState] = useState<ViewState>("hero");
   const [splashPlayed, setSplashPlayed] = useState(false);
   const [heroScroll, setHeroScroll] = useState(0);
+
+  useEffect(() => {
+    let color = "#FF007F";
+    switch(viewState) {
+      case "hero": color = "#FF007F"; break;
+      case "about": color = "#D4AF37"; break;
+      case "contact": color = "#FF007F"; break;
+      case "linktree": color = "#E2B4CD"; break;
+      case "merch": color = "#C49B66"; break;
+      case "discography": color = "#d65c22"; break;
+    }
+    setThemeColor(color);
+  }, [viewState, setThemeColor]);
 
   useEffect(() => {
     if (splashPlayed) {
